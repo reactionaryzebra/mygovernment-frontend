@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const LoginForm = styled.form`
+const AuthForm = styled.form`
   height: 80vh;
   width: 50vw;
   display: flex;
@@ -18,4 +18,4 @@ const LoginForm = styled.form`
   }
 `;
 
-export default LoginForm;
+export default AuthForm;
