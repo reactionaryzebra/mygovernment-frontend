@@ -11,7 +11,7 @@ const Auth = () => {
   const [register, setRegister] = useState(false);
   return (
     <div>
-      <AuthForm onSubmit={e => console.log("working")}>
+      <AuthForm onSubmit={(state, e) => handleSubmit(state, register, e)}>
         <label>Username:</label>
         <input
           type="text"
@@ -81,6 +81,29 @@ const Auth = () => {
       </AuthForm>
     </div>
   );
+};
+
+const handleSubmit = async (state, register, e) => {
+  try {
+    if (register) {
+      const data = await fetch("/api/v1/auth/register", {
+        method: "POST",
+        body: state
+      });
+      console.log(data);
+      const parsedData = await data.json();
+      parsedData.logged ? console.log("in") : console.log(parsedData.message);
+    } else {
+      const data = await fetch("/api/v1/auth/login", {
+        method: "POST",
+        body: state
+      });
+      const parsedData = await data.json();
+      parsedData.logged ? console.log("in") : console.log(parsedData.message);
+    }
+  } catch (err) {
+    throw new Error(err);
+  }
 };
 
 export default Auth;
