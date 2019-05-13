@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AuthForm from "../../styles/AuthForm";
+import Input from "../../styles/Input";
 import useForm from "../useForm";
 
 const Auth = () => {
@@ -39,14 +40,14 @@ const Auth = () => {
     <div>
       <AuthForm onSubmit={handleSubmit}>
         <label>Username:</label>
-        <input
+        <Input
           type="text"
           name="username"
           value={values.username}
           onChange={handleChange}
         />
         <label>Password:</label>
-        <input
+        <Input
           type="password"
           name="password"
           value={values.password}
@@ -55,21 +56,21 @@ const Auth = () => {
         {register ? (
           <>
             <label>Confirm Password:</label>
-            <input
+            <Input
               type="password"
               name="confirmPassword"
               value={values.confirmPassword}
               onChange={handleChange}
             />
             <label>E-Mail:</label>
-            <input
+            <Input
               type="email"
               name="eMail"
               value={values.eMail}
               onChange={handleChange}
             />
             <label>Address:</label>
-            <input
+            <Input
               type="text"
               name="address"
               value={values.address}
