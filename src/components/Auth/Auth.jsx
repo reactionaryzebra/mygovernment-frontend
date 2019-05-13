@@ -1,62 +1,83 @@
 import React, { useState } from "react";
 import AuthForm from "../../styles/AuthForm";
+import useForm from "../useForm";
 
 const Auth = () => {
-  const [state, setState] = useState({
-    username: "",
-    password: "",
-    confirmPassword: "",
-    eMail: "",
-    address: ""
-  });
+  const authenticate = async () => {
+    try {
+      if (register) {
+        const data = await fetch("/api/v1/auth/register", {
+          method: "POST",
+          body: JSON.stringify(values),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+        const parsedData = await data.json();
+        parsedData.logged ? console.log("in") : setMessage(parsedData.message);
+      } else {
+        const data = await fetch("/api/v1/auth/login", {
+          method: "POST",
+          body: JSON.stringify(values),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+        const parsedData = await data.json();
+        parsedData.logged ? console.log("in") : setMessage(parsedData.message);
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
+  const { handleChange, handleSubmit, values } = useForm(authenticate);
   const [register, setRegister] = useState(false);
+  const [message, setMessage] = useState("");
+
   return (
     <div>
-      <AuthForm onSubmit={e => handleSubmit(state, register, e)}>
+      <AuthForm onSubmit={handleSubmit}>
         <label>Username:</label>
         <input
           type="text"
-          value={state.username}
-          onChange={e =>
-            setState({ ...state, username: e.currentTarget.value })
-          }
+          name="username"
+          value={values.username}
+          onChange={handleChange}
         />
         <label>Password:</label>
         <input
           type="password"
-          value={state.password}
-          onChange={e =>
-            setState({ ...state, password: e.currentTarget.value })
-          }
+          name="password"
+          value={values.password}
+          onChange={handleChange}
         />
         {register ? (
           <>
             <label>Confirm Password:</label>
             <input
               type="password"
-              value={state.confirmPassword}
-              onChange={e =>
-                setState({ ...state, confirmPassword: e.currentTarget.value })
-              }
+              name="confirmPassword"
+              value={values.confirmPassword}
+              onChange={handleChange}
             />
             <label>E-Mail:</label>
             <input
               type="email"
-              value={state.eMail}
-              onChange={e =>
-                setState({ ...state, eMail: e.currentTarget.value })
-              }
+              name="eMail"
+              value={values.eMail}
+              onChange={handleChange}
             />
             <label>Address:</label>
             <input
               type="text"
-              value={state.address}
-              onChange={e =>
-                setState({ ...state, address: e.currentTarget.value })
-              }
+              name="address"
+              value={values.address}
+              onChange={handleChange}
             />
           </>
         ) : null}
+        <h5>{message}</h5>
         <button type="submit">{register ? "Register" : "Login"}</button>
         {!register ? (
           <>
@@ -90,36 +111,6 @@ const Auth = () => {
       </AuthForm>
     </div>
   );
-};
-
-const handleSubmit = async (state, register, e) => {
-  try {
-    e.preventDefault();
-    if (register) {
-      const data = await fetch("/api/v1/auth/register", {
-        method: "POST",
-        body: JSON.stringify(state),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-      console.log(data);
-      const parsedData = await data.json();
-      parsedData.logged ? console.log("in") : console.log(parsedData.message);
-    } else {
-      const data = await fetch("/api/v1/auth/login", {
-        method: "POST",
-        body: JSON.stringify(state),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-      const parsedData = await data.json();
-      parsedData.logged ? console.log("in") : console.log(parsedData.message);
-    }
-  } catch (err) {
-    throw new Error(err);
-  }
 };
 
 export default Auth;
