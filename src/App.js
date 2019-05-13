@@ -10,6 +10,7 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact path={routes.HOME} render={() => <Auth />} />
+        <Route exact path={routes.ROOT} render={() => <Landing />} />
       </Switch>
     </div>
   );
