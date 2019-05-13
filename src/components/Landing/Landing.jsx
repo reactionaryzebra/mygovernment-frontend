@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useForm from "../useForm";
+import LandingPage from "../../styles/LandingPage";
 
 const Landing = () => {
   const searchAddress = async () => {
@@ -9,7 +10,8 @@ const Landing = () => {
   };
   const { values, handleChange, handleSubmit } = useForm(searchAddress);
   return (
-    <div>
+    <LandingPage>
+      <h1>MyGovernment</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -19,7 +21,7 @@ const Landing = () => {
         />
         <button type="submit">Search</button>
       </form>
-    </div>
+    </LandingPage>
   );
 };
 
