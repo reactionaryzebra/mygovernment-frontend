@@ -6,12 +6,13 @@ const Auth = () => {
     username: "",
     password: "",
     confirmPassword: "",
+    eMail: "",
     address: ""
   });
   const [register, setRegister] = useState(false);
   return (
     <div>
-      <AuthForm onSubmit={(state, e) => handleSubmit(state, register, e)}>
+      <AuthForm onSubmit={e => handleSubmit(state, register, e)}>
         <label>Username:</label>
         <input
           type="text"
@@ -38,6 +39,14 @@ const Auth = () => {
                 setState({ ...state, confirmPassword: e.currentTarget.value })
               }
             />
+            <label>E-Mail:</label>
+            <input
+              type="email"
+              value={state.eMail}
+              onChange={e =>
+                setState({ ...state, eMail: e.currentTarget.value })
+              }
+            />
             <label>Address:</label>
             <input
               type="text"
@@ -48,7 +57,7 @@ const Auth = () => {
             />
           </>
         ) : null}
-        <button type="submit">Login</button>
+        <button type="submit">{register ? "Register" : "Login"}</button>
         {!register ? (
           <>
             <p>
@@ -85,10 +94,14 @@ const Auth = () => {
 
 const handleSubmit = async (state, register, e) => {
   try {
+    e.preventDefault();
     if (register) {
       const data = await fetch("/api/v1/auth/register", {
         method: "POST",
-        body: state
+        body: JSON.stringify(state),
+        headers: {
+          "Content-Type": "application/json"
+        }
       });
       console.log(data);
       const parsedData = await data.json();
@@ -96,7 +109,10 @@ const handleSubmit = async (state, register, e) => {
     } else {
       const data = await fetch("/api/v1/auth/login", {
         method: "POST",
-        body: state
+        body: JSON.stringify(state),
+        headers: {
+          "Content-Type": "application/json"
+        }
       });
       const parsedData = await data.json();
       parsedData.logged ? console.log("in") : console.log(parsedData.message);
