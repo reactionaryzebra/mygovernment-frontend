@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 
 import * as routes from "./constants/routes";
 import Auth from "./components/Auth/Auth";
+import Landing from "./components/Landing/Landing";
 import "./App.css";
 
 function App() {
