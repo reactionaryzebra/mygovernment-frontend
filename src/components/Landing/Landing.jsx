@@ -3,11 +3,10 @@ import useForm from "../useForm";
 import LandingPage from "../../styles/LandingPage";
 import Input from "../../styles/Input";
 
-const Landing = () => {
+const Landing = props => {
   const searchAddress = async () => {
-    const data = await fetch(
-      `/api/v1/representatives?${encodeURI(values.address)}`
-    );
+    props.props.setAddress(values.address);
+    props.props.history.push("/home");
   };
   const { values, handleChange, handleSubmit } = useForm(searchAddress);
   return (
