@@ -7,7 +7,9 @@ const RepsContainer = ({ address }) => {
   return (
     <div>
       <RepList address={address} setCurrentRep={setCurrentRep} />
-      {currentRep ? <RepProfile rep={currentRep} /> : null}
+      {currentRep ? (
+        <RepProfile currentRep={currentRep} address={address} />
+      ) : null}
     </div>
   );
 };

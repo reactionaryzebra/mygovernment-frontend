@@ -51,7 +51,7 @@ const MyRepresentatives = ({ address, setCurrentRep }) => {
       };
       fetchData();
     },
-    [query, variables]
+    []
   );
 
   return (
