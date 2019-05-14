@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const MyRepresentatives = ({ address }) => {
+const MyRepresentatives = ({ address, setCurrentRep }) => {
   const [federalReps, setFederalReps] = useState([]);
   const [stateReps, setStateReps] = useState([]);
   const [localReps, setLocalReps] = useState([]);
@@ -35,7 +35,11 @@ const MyRepresentatives = ({ address }) => {
         );
         setStateReps(
           parsedData.data.representatives.filter(
-            rep => rep.division.includes('state') && !rep.office.includes('United States') && !rep.division.includes('county') && !rep.division.includes('place')
+            rep =>
+              rep.division.includes("state") &&
+              !rep.office.includes("United States") &&
+              !rep.division.includes("county") &&
+              !rep.division.includes("place")
           )
         );
         setLocalReps(
@@ -47,7 +51,7 @@ const MyRepresentatives = ({ address }) => {
       };
       fetchData();
     },
-    []
+    [query, variables]
   );
 
   return (
@@ -59,7 +63,9 @@ const MyRepresentatives = ({ address }) => {
         <ul>
           {federalReps.map((rep, i) => (
             <li key={i}>
-              {rep.office} - {rep.name}
+              <a onClick={() => setCurrentRep(rep.name)}>
+                {rep.office} - {rep.name}
+              </a>
             </li>
           ))}
         </ul>
@@ -71,7 +77,9 @@ const MyRepresentatives = ({ address }) => {
         <ul>
           {stateReps.map((rep, i) => (
             <li key={i}>
-              {rep.office} - {rep.name}
+              <a onClick={() => setCurrentRep(rep.name)}>
+                {rep.office} - {rep.name}
+              </a>
             </li>
           ))}
         </ul>
@@ -83,7 +91,9 @@ const MyRepresentatives = ({ address }) => {
         <ul>
           {localReps.map((rep, i) => (
             <li key={i}>
-              {rep.office} - {rep.name}
+              <a onClick={() => setCurrentRep(rep.name)}>
+                {rep.office} - {rep.name}
+              </a>
             </li>
           ))}
         </ul>

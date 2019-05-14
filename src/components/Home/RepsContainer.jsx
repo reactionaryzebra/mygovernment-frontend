@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import RepList from "./RepList";
 import RepProfile from "./RepProfile";
 
-const RepsContainer = () => {
+const RepsContainer = ({ address }) => {
+  const [currentRep, setCurrentRep] = useState("");
   return (
     <div>
-      <RepList />
+      <RepList address={address} setCurrentRep={setCurrentRep} />
       {currentRep ? <RepProfile rep={currentRep} /> : null}
     </div>
   );

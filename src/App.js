@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 
 import * as routes from "./constants/routes";
-import MyRepresentatives from "./components/Home/RepList";
+import RepsContainer from "./components/Home/RepsContainer";
 import Auth from "./components/Auth/Auth";
 import Landing from "./components/Landing/Landing";
 import "./App.css";
@@ -15,7 +15,7 @@ const App = props => {
         <Route
           exact
           path={routes.HOME}
-          render={() => <MyRepresentatives address={address} />}
+          render={() => <RepsContainer address={address} />}
         />
         <Route
           exact
