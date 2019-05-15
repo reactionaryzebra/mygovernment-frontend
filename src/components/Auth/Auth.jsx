@@ -6,9 +6,14 @@ import useForm from "../useForm";
 const registerQuery = `
 mutation User ($username: String!, $password: String!, $confirmPassword: String!, $email: String!, $address: String!){
   register(username: $username, password: $password, confirmPassword: $confirmPassword, email: $email, address: $address){
-    message
     logged
-    address
+    message
+    user {
+      id
+      username
+      address
+      verified
+    }
   }
 }
 `;
@@ -18,12 +23,17 @@ mutation User ($username: String!, $password: String!){
   login(username: $username, password: $password){
     message
     logged
-    address
+    user {
+      id
+      username
+      address
+      verified
+    }
   }
 }
 `;
 
-const Auth = () => {
+const Auth = ({ props: { history, setUser, setLogged } }) => {
   const authenticate = async () => {
     try {
       if (register) {
@@ -42,9 +52,12 @@ const Auth = () => {
           body: JSON.stringify({ query: registerQuery, variables })
         });
         const parsedData = await data.json();
-        parsedData.data.register.logged
-          ? console.log("in")
-          : setMessage(parsedData.data.register.message);
+        if (parsedData.data.register.logged) {
+          setLogged(true);
+          setUser(parsedData.data.register.user);
+        } else {
+          setMessage(parsedData.data.register.message);
+        }
       } else {
         const variables = {
           username: values.username,
@@ -58,9 +71,12 @@ const Auth = () => {
           }
         });
         const parsedData = await data.json();
-        parsedData.data.login.logged
-          ? console.log("in")
-          : setMessage(parsedData.data.login.message);
+        if (parsedData.data.login.logged) {
+          setLogged(true);
+          setUser(parsedData.data.login.user);
+        } else {
+          setMessage(parsedData.data.login.message);
+        }
       }
     } catch (err) {
       throw new Error(err);
