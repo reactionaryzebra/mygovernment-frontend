@@ -42,7 +42,7 @@ const RepProfile = ({ currentRep, address }) => {
       setRep(parsedData.data.representative)
     };
     fetchData();
-  }, []);
+  });
 
   return <div>
     <img src={rep.photoUrl} style={{width: '100px', height:'100px'}} />
