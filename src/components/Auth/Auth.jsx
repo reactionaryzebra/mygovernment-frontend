@@ -46,15 +46,21 @@ const Auth = () => {
           ? console.log("in")
           : setMessage(parsedData.data.register.message);
       } else {
-        const data = await fetch("/api/v1/auth/login", {
+        const variables = {
+          username: values.username,
+          password: values.password
+        };
+        const data = await fetch("http://localhost:9000/graphql", {
           method: "POST",
-          body: JSON.stringify(values),
+          body: JSON.stringify({ query: loginQuery, variables }),
           headers: {
             "Content-Type": "application/json"
           }
         });
         const parsedData = await data.json();
-        parsedData.logged ? console.log("in") : setMessage(parsedData.message);
+        parsedData.data.login.logged
+          ? console.log("in")
+          : setMessage(parsedData.data.login.message);
       }
     } catch (err) {
       throw new Error(err);
