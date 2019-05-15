@@ -3,19 +3,48 @@ import AuthForm from "../../styles/AuthForm";
 import Input from "../../styles/Input";
 import useForm from "../useForm";
 
+const registerQuery = `
+mutation User ($username: String!, $password: String!, $confirmPassword: String!, $email: String!, $address: String!){
+  register(username: $username, password: $password, confirmPassword: $confirmPassword, email: $email, address: $address){
+    message
+    logged
+    address
+  }
+}
+`;
+
+const loginQuery = `
+mutation User ($username: String!, $password: String!){
+  login(username: $username, password: $password){
+    message
+    logged
+    address
+  }
+}
+`;
+
 const Auth = () => {
   const authenticate = async () => {
     try {
       if (register) {
-        const data = await fetch("/api/v1/auth/register", {
+        const variables = {
+          username: values.username,
+          password: values.password,
+          confirmPassword: values.confirmPassword,
+          email: values.eMail,
+          address: values.address
+        };
+        const data = await fetch("http://localhost:9000/graphql", {
           method: "POST",
-          body: JSON.stringify(values),
           headers: {
             "Content-Type": "application/json"
-          }
+          },
+          body: JSON.stringify({ query: registerQuery, variables })
         });
         const parsedData = await data.json();
-        parsedData.logged ? console.log("in") : setMessage(parsedData.message);
+        parsedData.data.register.logged
+          ? console.log("in")
+          : setMessage(parsedData.data.register.message);
       } else {
         const data = await fetch("/api/v1/auth/login", {
           method: "POST",

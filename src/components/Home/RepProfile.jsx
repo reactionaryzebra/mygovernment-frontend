@@ -24,6 +24,10 @@ const RepProfile = ({ currentRep, address }) => {
           name
           title
         }
+        channels {
+          type
+          id
+        }
       }
     }
   `;
@@ -49,6 +53,18 @@ const RepProfile = ({ currentRep, address }) => {
     <h2>{rep.name}</h2>
     <h3>{rep.office}</h3>
     <h4>{rep.party}</h4>
+    <div>
+      <h4>Contact</h4>
+      <div>
+        <ul>
+          {rep.channels ? rep.channels.map((channel, i) => <li>
+            <div>
+              <a target="_blank" href={`https://${channel.type}.com/${channel.id}`}>{channel.type}</a>
+            </div>
+          </li>) : null}
+        </ul>
+      </div>
+    </div>
     <div>
       <h4>Committees</h4>
       <div>

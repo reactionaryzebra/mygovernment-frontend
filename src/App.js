@@ -22,6 +22,7 @@ const App = props => {
           path={routes.ROOT}
           render={props => <Landing props={{ ...props, setAddress }} />}
         />
+        <Route exact path="/auth" render={props => <Auth />} />
       </Switch>
     </div>
   );
