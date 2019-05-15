@@ -6,6 +6,7 @@ import RepsContainer from "./components/Home/RepsContainer";
 import Auth from "./components/Auth/Auth";
 import Landing from "./components/Landing/Landing";
 import NavBar from "./components/NavBar/NavBar";
+import EditAccount from "./components/Account/EditAccount";
 import "./App.css";
 
 const App = props => {
@@ -16,6 +17,11 @@ const App = props => {
     <div className="App">
       <NavBar user={user} logged={logged} />
       <Switch>
+        <Route
+          exact
+          path={routes.ACCT}
+          render={() => <EditAccount user={user} />}
+        />
         <Route
           exact
           path={routes.HOME}

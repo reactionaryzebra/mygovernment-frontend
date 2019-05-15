@@ -8,7 +8,7 @@ const NavBar = ({ user, logged }) => {
       <div>MyGovernment</div>
       <div>
         {logged ? (
-          <NavLink>{user.username}</NavLink>
+          <NavLink to={routes.ACCT}>{user.username}</NavLink>
         ) : (
           <NavLink to={routes.AUTH}>Login</NavLink>
         )}
