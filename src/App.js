@@ -5,6 +5,7 @@ import * as routes from "./constants/routes";
 import RepsContainer from "./components/Home/RepsContainer";
 import Auth from "./components/Auth/Auth";
 import Landing from "./components/Landing/Landing";
+import NavBar from "./components/NavBar/NavBar";
 import "./App.css";
 
 const App = props => {
@@ -13,6 +14,7 @@ const App = props => {
   const [user, setUser] = useState({});
   return (
     <div className="App">
+      <NavBar user={user} logged={logged} />
       <Switch>
         <Route
           exact
@@ -26,7 +28,7 @@ const App = props => {
         />
         <Route
           exact
-          path="/auth"
+          path={routes.AUTH}
           render={props => <Auth props={{ ...props, setUser, setLogged }} />}
         />
       </Switch>
