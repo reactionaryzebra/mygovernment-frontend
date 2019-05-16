@@ -3,10 +3,10 @@ import useForm from "../useForm";
 import LandingPage from "../../styles/LandingPage";
 import Input from "../../styles/Input";
 
-const Landing = props => {
+const Landing = ({props: {setAddress, history}}) => {
   const searchAddress = async () => {
-    props.props.setAddress(values.address);
-    props.props.history.push("/home");
+    setAddress(values.address);
+    history.push("/home");
   };
   const { values, handleChange, handleSubmit } = useForm(searchAddress);
   return (
