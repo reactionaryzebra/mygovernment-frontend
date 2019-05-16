@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import * as routes from "../../constants/routes";
+import Nav from '../../styles/Nav';
 
 const NavBar = ({ user, logged }) => {
   return (
-    <div>
+    <Nav>
       <div>
         <NavLink to={routes.HOME}>MyGovernment</NavLink>
       </div>
@@ -15,7 +16,7 @@ const NavBar = ({ user, logged }) => {
           <NavLink to={routes.AUTH}>Login</NavLink>
         )}
       </div>
-    </div>
+    </Nav>
   );
 };
 
