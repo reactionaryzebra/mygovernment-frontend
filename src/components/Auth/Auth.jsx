@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AuthForm from "../../styles/AuthForm";
 import Input from "../../styles/Input";
 import useForm from "../useForm";
+import * as routes from '../../constants/routes'
 
 const registerQuery = `
 mutation User ($username: String!, $password: String!, $confirmPassword: String!, $email: String!, $address: String!){
@@ -34,9 +35,14 @@ mutation User ($username: String!, $password: String!){
 `;
 
 const Auth = ({ props: { history, setUser, setLogged } }) => {
+
+  const [register, setRegister] = useState(false);
+  const [message, setMessage] = useState("");
+
   const authenticate = async () => {
     try {
       if (register) {
+
         const variables = {
           username: values.username,
           password: values.password,
@@ -44,6 +50,7 @@ const Auth = ({ props: { history, setUser, setLogged } }) => {
           email: values.eMail,
           address: values.address
         };
+
         const data = await fetch("http://localhost:9000/graphql", {
           method: "POST",
           headers: {
@@ -51,19 +58,24 @@ const Auth = ({ props: { history, setUser, setLogged } }) => {
           },
           body: JSON.stringify({ query: registerQuery, variables })
         });
-        const parsedData = await data.json();
-        if (parsedData.data.register.logged) {
+
+        const {data: {register: parsedData}} = await data.json();
+
+        if (parsedData.logged) {
           setLogged(true);
-          setUser(parsedData.data.register.user);
+          setUser(parsedData.user);
           history.push('/home')
         } else {
-          setMessage(parsedData.data.register.message);
+          setMessage(parsedData.message);
         }
+
       } else {
+
         const variables = {
           username: values.username,
           password: values.password
         };
+
         const data = await fetch("http://localhost:9000/graphql", {
           method: "POST",
           body: JSON.stringify({ query: loginQuery, variables }),
@@ -71,23 +83,23 @@ const Auth = ({ props: { history, setUser, setLogged } }) => {
             "Content-Type": "application/json"
           }
         });
-        const parsedData = await data.json();
-        if (parsedData.data.login.logged) {
+
+        const {data: {login: parsedData}} = await data.json();
+        if (parsedData.logged) {
           setLogged(true);
-          setUser(parsedData.data.login.user);
-          history.push('/home')
+          setUser(parsedData.user);
+          history.push(routes.HOME)
         } else {
-          setMessage(parsedData.data.login.message);
+          setMessage(parsedData.message);
         }
       }
+      
     } catch (err) {
       throw new Error(err);
     }
   };
 
   const { handleChange, handleSubmit, values } = useForm(authenticate);
-  const [register, setRegister] = useState(false);
-  const [message, setMessage] = useState("");
 
   return (
     <div>
