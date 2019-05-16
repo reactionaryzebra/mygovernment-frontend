@@ -20,7 +20,7 @@ const App = props => {
         <Route
           exact
           path={routes.ACCT}
-          render={() => <EditAccount user={user} />}
+          render={() => <EditAccount user={user} setUser={setUser} />}
         />
         <Route
           exact

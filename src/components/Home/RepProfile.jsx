@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const RepProfile = ({ currentRep, address }) => {
-
-  const [rep, setRep] = useState({})
+  const [rep, setRep] = useState({});
 
   const query = `
     query Representative($address:String!, $name: String!){
@@ -11,6 +10,7 @@ const RepProfile = ({ currentRep, address }) => {
         office
         party
         photoUrl
+        proPublicaId
         news {
           url
           title
@@ -43,77 +43,98 @@ const RepProfile = ({ currentRep, address }) => {
         body: JSON.stringify({ query, variables })
       });
       const parsedData = await data.json();
-      setRep(parsedData.data.representative)
+      setRep(parsedData.data.representative);
     };
     fetchData();
   });
 
-  return <div>
-    <img src={rep.photoUrl} style={{width: '100px', height:'100px'}} />
-    <h2>{rep.name}</h2>
-    <h3>{rep.office}</h3>
-    <h4>{rep.party}</h4>
+  return (
     <div>
-      <h4>Contact</h4>
+      <img src={rep.photoUrl} style={{ width: "100px", height: "100px" }} />
+      <h2>{rep.name}</h2>
+      <h3>{rep.office}</h3>
+      <h4>{rep.party}</h4>
       <div>
-        <ul>
-          {rep.channels ? rep.channels.map((channel, i) => <li>
-            <div>
-              <a target="_blank" href={`https://${channel.type}.com/${channel.id}`}>{channel.type}</a>
-            </div>
-          </li>) : null}
-        </ul>
+        <h4>Contact</h4>
+        <div>
+          <ul>
+            {rep.channels
+              ? rep.channels.map((channel, i) => (
+                  <li>
+                    <div>
+                      <a
+                        target="_blank"
+                        href={`https://${channel.type}.com/${channel.id}`}
+                      >
+                        {channel.type}
+                      </a>
+                    </div>
+                  </li>
+                ))
+              : null}
+          </ul>
+        </div>
+      </div>
+      {rep.proPublicaId ? (
+        <div>
+          <h4>Committees</h4>
+          <div>
+            <ul>
+              {rep.committees
+                ? rep.committees.map((committee, i) => (
+                    <li>
+                      <div>
+                        <h5>
+                          {committee.title} - {committee.name}
+                        </h5>
+                      </div>
+                    </li>
+                  ))
+                : null}
+            </ul>
+          </div>
+        </div>
+      ) : null}
+      {rep.proPublicaId ? (
+        <div>
+          <h4>Bills</h4>
+          <div>
+            <ul>
+              {rep.bills
+                ? rep.bills.map((bill, i) => (
+                    <li>
+                      <div>
+                        <h5>{bill.short_title}</h5>
+                        <p>{bill.summary}</p>
+                      </div>
+                    </li>
+                  ))
+                : null}
+            </ul>
+          </div>
+        </div>
+      ) : null}
+      <div>
+        <h4>News</h4>
+        <div>
+          <ul>
+            {rep.news
+              ? rep.news.map((article, i) => (
+                  <li key={i}>
+                    <div>
+                      <h5>
+                        <a href={article.url}>{article.title}</a>
+                      </h5>
+                      <p>{article.description}</p>
+                    </div>
+                  </li>
+                ))
+              : null}
+          </ul>
+        </div>
       </div>
     </div>
-    <div>
-      <h4>Committees</h4>
-      <div>
-        <ul>
-          {rep.committees ? rep.committees.map((committee, i) => <li>
-            <div>
-              <h5>
-                {committee.title} - {committee.name}
-              </h5>
-            </div>
-          </li>) : null}
-        </ul>
-      </div>
-    </div>
-    <div>
-      <h4>Bills</h4>
-      <div>
-        <ul>
-          {rep.bills ? rep.bills.map((bill, i) => <li>
-            <div>
-              <h5>
-                {bill.short_title}
-              </h5>
-              <p>
-                {bill.summary}
-              </p>
-            </div>
-          </li>) : null}
-        </ul>
-      </div>
-    </div>
-    <div>
-      <h4>
-        News
-      </h4>
-      <div>
-        <ul>
-          {rep.news ? rep.news.map((article, i) =>
-            <li key={i}>
-              <div>
-                <h5><a href={article.url}>{article.title}</a></h5>
-                <p>{article.description}</p>
-              </div>
-            </li>
-          ) : null}
-        </ul>
-      </div>
-    </div>
-  </div>;
+  );
 };
 
 export default RepProfile;
