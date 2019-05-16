@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useForm from "../useForm";
 import LandingPage from "../../styles/LandingPage";
 import Input from "../../styles/Input";
+import SubmitButton from '../../styles/SubmitButton'
 
 const Landing = ({props: {setAddress, history}}) => {
 
@@ -23,7 +24,7 @@ const Landing = ({props: {setAddress, history}}) => {
           value={values.address}
           onChange={handleChange}
         />
-        <button type="submit">Search</button>
+        <SubmitButton type="submit">Search</SubmitButton>
       </form>
     </LandingPage>
   );
