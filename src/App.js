@@ -9,6 +9,7 @@ import NavBar from "./components/NavBar/NavBar";
 import EditAccount from "./components/Account/EditAccount";
 import "./App.css";
 
+
 const App = props => {
   const [address, setAddress] = useState("");
   const [logged, setLogged] = useState(false);

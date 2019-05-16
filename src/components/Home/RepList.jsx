@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+const graphqlEndpoint = process.env.REACT_APP_GRAPHQL_ENDPOINT
+
 const RepList = ({ address, setCurrentRep }) => {
 
   const [federalReps, setFederalReps] = useState([]);
@@ -23,7 +25,7 @@ const RepList = ({ address, setCurrentRep }) => {
 
       const fetchData = async () => {
 
-        const data = await fetch("http://localhost:9000/graphql", {
+        const data = await fetch(graphqlEndpoint, {
           method: "post",
           headers: {
             "Content-Type": "application/json"
@@ -57,7 +59,7 @@ const RepList = ({ address, setCurrentRep }) => {
       };
 
       fetchData();
-      
+
     },
     []
   );

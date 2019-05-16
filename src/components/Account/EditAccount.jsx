@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import useForm from "../useForm";
 import * as routes from '../../constants/routes'
 
+const graphqlEndpoint = process.env.REACT_APP_GRAPHQL_ENDPOINT
+
 const userQuery = `
   query User ($id: String!) {
     user (id: $id) {
@@ -41,7 +43,7 @@ const EditAccount = ({props: {user, setUser, history, setLogged}}) => {
       address: values.address
     }
 
-    const data = await fetch("http://localhost:9000/graphql", {
+    const data = await fetch(graphqlEndpoint, {
       method: "post",
       body: JSON.stringify({
         query: editMutation,
@@ -64,7 +66,7 @@ const EditAccount = ({props: {user, setUser, history, setLogged}}) => {
       id: user.id
     }
 
-    const data = await fetch("http://localhost:9000/graphql", {
+    const data = await fetch(graphqlEndpoint, {
       method: "post",
       body: JSON.stringify({
         query: deleteMutation,
@@ -90,7 +92,7 @@ const EditAccount = ({props: {user, setUser, history, setLogged}}) => {
     const variables = { id: user.id }
 
     const fetchUser = async () => {
-      const data = await fetch("http://localhost:9000/graphql", {
+      const data = await fetch(graphqlEndpoint, {
         method: "post",
         body: JSON.stringify({ query: userQuery, variables }),
         headers: {
