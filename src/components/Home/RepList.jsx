@@ -1,40 +1,45 @@
 import React, { useState, useEffect } from "react";
 
-const MyRepresentatives = ({ address, setCurrentRep }) => {
+const RepList = ({ address, setCurrentRep }) => {
+
   const [federalReps, setFederalReps] = useState([]);
   const [stateReps, setStateReps] = useState([]);
   const [localReps, setLocalReps] = useState([]);
 
-  const query = `
-    query Representative($address: String!){
-      representatives(address: $address) {
-        name
-        office
-        division
-      }
-    }
-  `;
-
-  const variables = { address: address };
-
   useEffect(
     () => {
+
+      const repListQuery = `
+        query Representative($address: String!){
+          representatives(address: $address) {
+            name
+            office
+            division
+          }
+        }
+      `;
+
+      const variables = { address: address };
+
       const fetchData = async () => {
+
         const data = await fetch("http://localhost:9000/graphql", {
           method: "post",
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ query, variables })
+          body: JSON.stringify({ query: repListQuery, variables })
         });
-        const parsedData = await data.json();
+        const {data: {representatives}} = await data.json();
+
         setFederalReps(
-          parsedData.data.representatives.filter(rep =>
+          representatives.filter(rep =>
             rep.office.includes("United States")
           )
         );
+
         setStateReps(
-          parsedData.data.representatives.filter(
+          representatives.filter(
             rep =>
               rep.division.includes("state") &&
               !rep.office.includes("United States") &&
@@ -42,14 +47,17 @@ const MyRepresentatives = ({ address, setCurrentRep }) => {
               !rep.division.includes("place")
           )
         );
+
         setLocalReps(
-          parsedData.data.representatives.filter(
+          representatives.filter(
             rep =>
               rep.division.includes("place") || rep.division.includes("county")
           )
         );
       };
+
       fetchData();
+      
     },
     []
   );
@@ -102,4 +110,4 @@ const MyRepresentatives = ({ address, setCurrentRep }) => {
   );
 };
 
-export default MyRepresentatives;
+export default RepList;
