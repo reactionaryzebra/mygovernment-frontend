@@ -65,7 +65,7 @@ const RepProfile = ({ currentRep, address }) => {
           <ul>
             {representative.channels
               ? representative.channels.map((channel, i) => (
-                  <li>
+                  <li key={i}>
                     <div>
                       <a
                         target="_blank"
@@ -87,7 +87,7 @@ const RepProfile = ({ currentRep, address }) => {
             <ul>
               {representative.committees
                 ? representative.committees.map((committee, i) => (
-                    <li>
+                    <li key={i}>
                       <div>
                         <h5>
                           {committee.title} - {committee.name}
@@ -107,7 +107,7 @@ const RepProfile = ({ currentRep, address }) => {
             <ul>
               {representative.bills
                 ? representative.bills.map((bill, i) => (
-                    <li>
+                    <li key={i}>
                       <div>
                         <h5>{bill.short_title}</h5>
                         <p>{bill.summary}</p>
