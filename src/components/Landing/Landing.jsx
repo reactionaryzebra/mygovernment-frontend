@@ -11,10 +11,11 @@ const Landing = ({props: {setAddress, history}}) => {
   };
 
   const { values, handleChange, handleSubmit } = useForm(searchAddress);
-  
+
   return (
     <LandingPage>
       <h1>MyGovernment</h1>
+      <p>Enter your address below to see who represents you</p>
       <form onSubmit={handleSubmit}>
         <Input
           type="text"

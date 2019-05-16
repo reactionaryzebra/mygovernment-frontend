@@ -7,6 +7,7 @@ const Input = styled.input`
   border-bottom: 1px solid black;
   font-family: Raleway;
   font-size: 2rem;
+  background: none;
 `;
 
 export default Input;
