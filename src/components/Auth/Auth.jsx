@@ -55,6 +55,7 @@ const Auth = ({ props: { history, setUser, setLogged } }) => {
         if (parsedData.data.register.logged) {
           setLogged(true);
           setUser(parsedData.data.register.user);
+          history.push('/home')
         } else {
           setMessage(parsedData.data.register.message);
         }
@@ -74,6 +75,7 @@ const Auth = ({ props: { history, setUser, setLogged } }) => {
         if (parsedData.data.login.logged) {
           setLogged(true);
           setUser(parsedData.data.login.user);
+          history.push('/home')
         } else {
           setMessage(parsedData.data.login.message);
         }
