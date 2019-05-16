@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import useForm from "../useForm";
 import * as routes from '../../constants/routes'
 
-const getUser = `
+const userQuery = `
   query User ($id: String!) {
     user (id: $id) {
       username
@@ -12,7 +12,7 @@ const getUser = `
   }
 `;
 
-const editUser = `
+const editMutation = `
   mutation User ($id: String!, $username: String, $eMail: String, $address: String){
     editUser (id: $id, username: $username, eMail: $eMail, address: $address) {
       id
@@ -24,73 +24,87 @@ const editUser = `
   }
 `;
 
-const destroyUser = `
+const deleteMutation = `
   mutation User ($id: String!){
     deleteUser (id: $id)
   }
 `
 
 const EditAccount = ({props: {user, setUser, history, setLogged}}) => {
+
   const updateUser = async () => {
+
+    const variables = {
+      id: user.id,
+      username: values.username,
+      eMail: values.eMail,
+      address: values.address
+    }
+
     const data = await fetch("http://localhost:9000/graphql", {
       method: "post",
       body: JSON.stringify({
-        query: editUser,
-        variables: {
-          id: user.id,
-          username: values.username,
-          eMail: values.eMail,
-          address: values.address
-        }
+        query: editMutation,
+        variables
       }),
       headers: {
         "Content-Type": "application/json"
       }
     });
-    const parsedData = await data.json()
-    setUser(parsedData.data.editUser)
+
+    const {data: {editUser}} = await data.json()
+
+    setUser(editUser)
     setEdit(false)
   };
 
   const deleteUser = async () => {
+
+    const variables = {
+      id: user.id
+    }
+
     const data = await fetch("http://localhost:9000/graphql", {
       method: "post",
       body: JSON.stringify({
-        query: destroyUser,
-        variables: {
-          id: user.id
-        }
+        query: deleteMutation,
+        variables
       }),
       headers: {
         "Content-Type": "application/json"
       }
     });
-    const parsedData = await data.json()
-    if (parsedData.data.deleteUser) {
+    const {data: {deleteUser}} = await data.json()
+    if (deleteUser) {
       setUser({})
       setLogged(false)
       history.push(routes.ROOT)
     }
   }
 
-
-
   const [edit, setEdit] = useState(false);
   const { values, setValues, handleChange, handleSubmit } = useForm(updateUser);
 
   useEffect(() => {
+
+    const variables = { id: user.id }
+
     const fetchUser = async () => {
       const data = await fetch("http://localhost:9000/graphql", {
         method: "post",
-        body: JSON.stringify({ query: getUser, variables: { id: user.id } }),
+        body: JSON.stringify({ query: userQuery, variables }),
         headers: {
           "Content-Type": "application/json"
         }
       });
-      const parsedData = await data.json();
-      setValues(parsedData.data.user);
+
+      const { data: {user} } = await data.json();
+
+      setValues(user);
     };
+
     fetchUser();
+
   }, []);
 
   return (
