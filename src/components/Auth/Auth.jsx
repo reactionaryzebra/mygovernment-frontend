@@ -5,6 +5,7 @@ import useForm from "../useForm";
 import * as routes from '../../constants/routes'
 
 const graphqlEndpoint = process.env.REACT_APP_GRAPHQL_ENDPOINT
+console.log(graphqlEndpoint)
 
 const registerQuery = `
 mutation User ($username: String!, $password: String!, $confirmPassword: String!, $email: String!, $address: String!){
