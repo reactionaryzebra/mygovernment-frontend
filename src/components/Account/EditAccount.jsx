@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import useForm from "../useForm";
+import * as routes from '../../constants/routes'
 
 const getUser = `
   query User ($id: String!) {
@@ -23,7 +24,13 @@ const editUser = `
   }
 `;
 
-const EditAccount = ({ user, setUser }) => {
+const destroyUser = `
+  mutation User ($id: String!){
+    deleteUser (id: $id)
+  }
+`
+
+const EditAccount = ({props: {user, setUser, history, setLogged}}) => {
   const updateUser = async () => {
     const data = await fetch("http://localhost:9000/graphql", {
       method: "post",
@@ -44,6 +51,29 @@ const EditAccount = ({ user, setUser }) => {
     setUser(parsedData.data.editUser)
     setEdit(false)
   };
+
+  const deleteUser = async () => {
+    const data = await fetch("http://localhost:9000/graphql", {
+      method: "post",
+      body: JSON.stringify({
+        query: destroyUser,
+        variables: {
+          id: user.id
+        }
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    const parsedData = await data.json()
+    if (parsedData.data.deleteUser) {
+      setUser({})
+      setLogged(false)
+      history.push(routes.ROOT)
+    }
+  }
+
+
 
   const [edit, setEdit] = useState(false);
   const { values, setValues, handleChange, handleSubmit } = useForm(updateUser);
@@ -95,6 +125,7 @@ const EditAccount = ({ user, setUser }) => {
         </button>
       </form>
       <button onClick={() => setEdit(!edit)}>Edit My Account Info</button>
+      <button onClick={() => deleteUser(user.id)}>Delete My Account</button>
     </div>
   );
 };
