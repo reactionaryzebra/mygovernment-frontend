@@ -25,7 +25,7 @@ const App = props => {
         <Route
           exact
           path={routes.HOME}
-          render={() => <RepsContainer address={address} />}
+          render={() => <RepsContainer address={user.address || address} />}
         />
         <Route
           exact
