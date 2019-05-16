@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+const graphqlEndpoint = process.env.REACT_APP_GRAPHQL_ENDPOINT
+
 const RepProfile = ({ currentRep, address }) => {
 
   const [representative, setRepresentative] = useState({});
@@ -38,7 +40,7 @@ const RepProfile = ({ currentRep, address }) => {
     const variables = { name: currentRep, address: address };
 
     const fetchData = async () => {
-      const data = await fetch("http://localhost:9000/graphql", {
+      const data = await fetch(graphqlEndpoint, {
         method: "post",
         headers: {
           "Content-Type": "application/json"

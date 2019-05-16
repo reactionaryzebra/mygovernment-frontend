@@ -4,6 +4,8 @@ import Input from "../../styles/Input";
 import useForm from "../useForm";
 import * as routes from '../../constants/routes'
 
+const graphqlEndpoint = process.env.REACT_APP_GRAPHQL_ENDPOINT
+
 const registerQuery = `
 mutation User ($username: String!, $password: String!, $confirmPassword: String!, $email: String!, $address: String!){
   register(username: $username, password: $password, confirmPassword: $confirmPassword, email: $email, address: $address){
@@ -51,7 +53,7 @@ const Auth = ({ props: { history, setUser, setLogged } }) => {
           address: values.address
         };
 
-        const data = await fetch("http://localhost:9000/graphql", {
+        const data = await fetch(graphqlEndpoint, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -76,7 +78,7 @@ const Auth = ({ props: { history, setUser, setLogged } }) => {
           password: values.password
         };
 
-        const data = await fetch("http://localhost:9000/graphql", {
+        const data = await fetch(graphqlEndpoint, {
           method: "POST",
           body: JSON.stringify({ query: loginQuery, variables }),
           headers: {
@@ -93,7 +95,7 @@ const Auth = ({ props: { history, setUser, setLogged } }) => {
           setMessage(parsedData.message);
         }
       }
-      
+
     } catch (err) {
       throw new Error(err);
     }
