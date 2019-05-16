@@ -5,7 +5,9 @@ import * as routes from "../../constants/routes";
 const NavBar = ({ user, logged }) => {
   return (
     <div>
-      <div>MyGovernment</div>
+      <div>
+        <NavLink to={routes.HOME}>MyGovernment</NavLink>
+      </div>
       <div>
         {logged ? (
           <NavLink to={routes.ACCT}>{user.username}</NavLink>
