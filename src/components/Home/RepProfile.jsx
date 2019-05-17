@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Profile from '../../styles/Profile'
+import ContactList from '../../styles/ContactList'
 
 const graphqlEndpoint = process.env.REACT_APP_GRAPHQL_ENDPOINT
 
@@ -69,7 +70,7 @@ const RepProfile = ({ currentRep, address }) => {
       <div>
         <h4>Contact</h4>
         <div>
-          <ul>
+          <ContactList>
             {representative.channels
               ? representative.channels.map((channel, i) => (
                   <li key={i}>
@@ -78,13 +79,13 @@ const RepProfile = ({ currentRep, address }) => {
                         target="_blank"
                         href={`https://${channel.type}.com/${channel.id}`}
                       >
-                        <img src={`../images/${channel.type}`} />
+                        <img src={`../images/${channel.type}.png`} />
                       </a>
                     </div>
                   </li>
                 ))
               : null}
-          </ul>
+          </ContactList>
         </div>
       </div>
       {representative.proPublicaId ? (
@@ -145,7 +146,7 @@ const RepProfile = ({ currentRep, address }) => {
           </ul>
         </div>
       </div>
-      Free Vector Art by <a href="https://www.vecteezy.com/">Vecteezy</a> 
+      Free Vector Art by <a href="https://www.vecteezy.com/">Vecteezy</a>
     </Profile>
   );
 };
