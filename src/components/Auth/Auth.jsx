@@ -7,7 +7,6 @@ import AuthContainer from '../../styles/AuthContainer'
 import SubmitButton from '../../styles/SubmitButton'
 
 const graphqlEndpoint = process.env.REACT_APP_GRAPHQL_ENDPOINT
-console.log(graphqlEndpoint)
 
 const registerQuery = `
 mutation User ($username: String!, $password: String!, $confirmPassword: String!, $email: String!, $address: String!){
