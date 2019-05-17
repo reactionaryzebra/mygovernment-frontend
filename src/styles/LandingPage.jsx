@@ -15,6 +15,14 @@ const LandingPage = styled.div`
     flex-direction: column;
     align-items: center;
   }
+  div {
+    background-color: rgba(255,255,255, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 3px 5px rgba(255,255,255,0.9);
+  }
 `;
 
 export default LandingPage;

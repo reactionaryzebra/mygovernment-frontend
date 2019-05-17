@@ -15,17 +15,19 @@ const Landing = ({props: {setAddress, history}}) => {
 
   return (
     <LandingPage>
-      <h1>MyGovernment</h1>
-      <p>Enter your address below to see who represents you</p>
-      <form onSubmit={handleSubmit}>
-        <Input
-          type="text"
-          name="address"
-          value={values.address}
-          onChange={handleChange}
-        />
-        <SubmitButton type="submit">Search</SubmitButton>
-      </form>
+      <div>
+        <h1>MyGovernment</h1>
+        <p>Enter your address below to see who represents you</p>
+        <form onSubmit={handleSubmit}>
+          <Input
+            type="text"
+            name="address"
+            value={values.address}
+            onChange={handleChange}
+          />
+          <SubmitButton type="submit">Search</SubmitButton>
+        </form>
+      </div>
     </LandingPage>
   );
 };
