@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Profile from '../../styles/Profile'
 import ContactList from '../../styles/ContactList'
+import CollapsibleParent from '../../styles/CollapsibleParent'
+import CollapsibleChild from '../../styles/CollapsibleChild'
 
 const graphqlEndpoint = process.env.REACT_APP_GRAPHQL_ENDPOINT
+
+const openCollapsible = e => {
+  e.currentTarget.querySelector('div').classList.toggle('open')
+}
 
 const RepProfile = ({ currentRep, address }) => {
 
@@ -60,16 +66,16 @@ const RepProfile = ({ currentRep, address }) => {
   return (
     <Profile>
       <div className={'header'}>
-        <img src={representative.photoUrl || '../images/default-user.jpg'} style={{ width: "100px", height: "100px" }} />
+        <img src={representative.photoUrl || '../images/default-user.jpg'} className={'headshot'} />
         <div>
           <h2>{representative.name}</h2>
           <h3>{representative.office}</h3>
           <h4>{representative.party}</h4>
         </div>
       </div>
-      <div>
+      <CollapsibleParent onClick={e => openCollapsible(e)}>
         <h4>Contact</h4>
-        <div>
+        <CollapsibleChild>
           <ContactList>
             {representative.channels
               ? representative.channels.map((channel, i) => (
@@ -86,12 +92,12 @@ const RepProfile = ({ currentRep, address }) => {
                 ))
               : null}
           </ContactList>
-        </div>
-      </div>
+        </CollapsibleChild>
+      </CollapsibleParent>
       {representative.proPublicaId ? (
-        <div>
+        <CollapsibleParent onClick={e => openCollapsible(e)}>
           <h4>Committees</h4>
-          <div>
+          <CollapsibleChild>
             <ul>
               {representative.committees
                 ? representative.committees.map((committee, i) => (
@@ -105,13 +111,13 @@ const RepProfile = ({ currentRep, address }) => {
                   ))
                 : null}
             </ul>
-          </div>
-        </div>
+          </CollapsibleChild>
+        </CollapsibleParent>
       ) : null}
       {representative.proPublicaId ? (
-        <div>
+        <CollapsibleParent onClick={e => openCollapsible(e)}>
           <h4>Bills</h4>
-          <div>
+          <CollapsibleChild>
             <ul>
               {representative.bills
                 ? representative.bills.map((bill, i) => (
@@ -124,12 +130,12 @@ const RepProfile = ({ currentRep, address }) => {
                   ))
                 : null}
             </ul>
-          </div>
-        </div>
+          </CollapsibleChild>
+        </CollapsibleParent>
       ) : null}
-      <div>
+      <CollapsibleParent onClick={e => openCollapsible(e)}>
         <h4>News</h4>
-        <div>
+        <CollapsibleChild>
           <ul>
             {representative.news
               ? representative.news.map((article, i) => (
@@ -144,8 +150,8 @@ const RepProfile = ({ currentRep, address }) => {
                 ))
               : null}
           </ul>
-        </div>
-      </div>
+        </CollapsibleChild>
+      </CollapsibleParent>
       Free Vector Art by <a href="https://www.vecteezy.com/">Vecteezy</a>
     </Profile>
   );

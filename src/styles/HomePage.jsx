@@ -8,6 +8,13 @@ const HomePage = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  overflow:auto;
+  > div:first-child {
+    width: 30vw;
+    margin-left: 1vw;
+    background-color: rgba(255,255,255, 0.9);
+    box-shadow: 0px 0px 3px 5px rgba(255,255,255,0.9);
+  }
 `
 
 export default HomePage;

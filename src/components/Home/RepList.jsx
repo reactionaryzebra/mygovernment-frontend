@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
+import CollapsibleChild from '../../styles/CollapsibleChild'
+import CollapsibleParent from '../../styles/CollapsibleParent'
 
 const graphqlEndpoint = process.env.REACT_APP_GRAPHQL_ENDPOINT
+
+const openCollapsible = e => {
+  e.currentTarget.querySelector('div').classList.toggle('open')
+}
 
 const RepList = ({ address, setCurrentRep }) => {
 
@@ -66,48 +72,48 @@ const RepList = ({ address, setCurrentRep }) => {
 
   return (
     <div>
-      <div>
+      <CollapsibleParent onClick={e => openCollapsible(e)}>
         <h3>Federal</h3>
-      </div>
-      <div>
-        <ul>
-          {federalReps.map((rep, i) => (
-            <li key={i}>
-              <a onClick={() => setCurrentRep(rep.name)}>
-                {rep.office} - {rep.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
+        <CollapsibleChild>
+          <ul>
+            {federalReps.map((rep, i) => (
+              <li key={i}>
+                <a onClick={() => setCurrentRep(rep.name)}>
+                  {rep.office} - {rep.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </CollapsibleChild>
+      </CollapsibleParent>
+      <CollapsibleParent onClick={e => openCollapsible(e)}>
         <h3>State</h3>
-      </div>
-      <div>
-        <ul>
-          {stateReps.map((rep, i) => (
-            <li key={i}>
-              <a onClick={() => setCurrentRep(rep.name)}>
-                {rep.office} - {rep.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
+        <CollapsibleChild>
+          <ul>
+            {stateReps.map((rep, i) => (
+              <li key={i}>
+                <a onClick={() => setCurrentRep(rep.name)}>
+                  {rep.office} - {rep.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </CollapsibleChild>
+      </CollapsibleParent>
+      <CollapsibleParent onClick={e => openCollapsible(e)}>
         <h3>Local</h3>
-      </div>
-      <div>
-        <ul>
-          {localReps.map((rep, i) => (
-            <li key={i}>
-              <a onClick={() => setCurrentRep(rep.name)}>
-                {rep.office} - {rep.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+        <CollapsibleChild>
+          <ul>
+            {localReps.map((rep, i) => (
+              <li key={i}>
+                <a onClick={() => setCurrentRep(rep.name)}>
+                  {rep.office} - {rep.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </CollapsibleChild>
+      </CollapsibleParent>
     </div>
   );
 };
