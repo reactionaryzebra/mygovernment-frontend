@@ -73,7 +73,7 @@ const RepProfile = ({ currentRep, address }) => {
                         target="_blank"
                         href={`https://${channel.type}.com/${channel.id}`}
                       >
-                        {channel.type}
+                        <img src={`../images/${channel.type}`} />
                       </a>
                     </div>
                   </li>
