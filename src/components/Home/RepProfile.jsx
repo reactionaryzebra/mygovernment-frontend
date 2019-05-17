@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Profile from '../../styles/Profile'
 
 const graphqlEndpoint = process.env.REACT_APP_GRAPHQL_ENDPOINT
 
@@ -56,11 +57,15 @@ const RepProfile = ({ currentRep, address }) => {
   });
 
   return (
-    <div>
-      <img src={representative.photoUrl} style={{ width: "100px", height: "100px" }} />
-      <h2>{representative.name}</h2>
-      <h3>{representative.office}</h3>
-      <h4>{representative.party}</h4>
+    <Profile>
+      <div className={'header'}>
+        <img src={representative.photoUrl || '../images/default-user.jpg'} style={{ width: "100px", height: "100px" }} />
+        <div>
+          <h2>{representative.name}</h2>
+          <h3>{representative.office}</h3>
+          <h4>{representative.party}</h4>
+        </div>
+      </div>
       <div>
         <h4>Contact</h4>
         <div>
@@ -140,7 +145,8 @@ const RepProfile = ({ currentRep, address }) => {
           </ul>
         </div>
       </div>
-    </div>
+      Free Vector Art by <a href="https://www.vecteezy.com/">Vecteezy</a> 
+    </Profile>
   );
 };
 
