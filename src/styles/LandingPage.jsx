@@ -4,7 +4,7 @@ const LandingPage = styled.div`
   background-image: linear-gradient(to top, rgba(191, 218, 231, 0.3), rgba(191, 218, 231, 0.3)), url('../images/landing-background.jpg');
   background-size: cover;
   width: 100vw;
-  height: 95vh;
+  height: 92vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

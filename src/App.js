@@ -7,6 +7,7 @@ import Auth from "./components/Auth/Auth";
 import Landing from "./components/Landing/Landing";
 import NavBar from "./components/NavBar/NavBar";
 import EditAccount from "./components/Account/EditAccount";
+import Footer from './styles/Footer'
 import "./App.css";
 
 
@@ -39,6 +40,7 @@ const App = props => {
           render={props => <Auth props={{ ...props, setUser, setLogged }} />}
         />
       </Switch>
+      <Footer>This app is powered by <a href="https://developers.google.com/civic-information/">Google Civic Info API</a>, <a href="https://www.propublica.org/datastore/api/propublica-congress-api">ProPublica Congress API</a>, and <a href="https://newsapi.org/docs/get-started">News API</a></Footer>
     </div>
   );
 };
