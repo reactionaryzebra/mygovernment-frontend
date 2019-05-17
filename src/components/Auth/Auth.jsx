@@ -3,6 +3,8 @@ import AuthForm from "../../styles/AuthForm";
 import Input from "../../styles/Input";
 import useForm from "../useForm";
 import * as routes from '../../constants/routes'
+import AuthContainer from '../../styles/AuthContainer'
+import SubmitButton from '../../styles/SubmitButton'
 
 const graphqlEndpoint = process.env.REACT_APP_GRAPHQL_ENDPOINT
 console.log(graphqlEndpoint)
@@ -105,7 +107,7 @@ const Auth = ({ props: { history, setUser, setLogged } }) => {
   const { handleChange, handleSubmit, values } = useForm(authenticate);
 
   return (
-    <div>
+    <AuthContainer>
       <AuthForm onSubmit={handleSubmit}>
         <label>Username:</label>
         <Input
@@ -147,7 +149,7 @@ const Auth = ({ props: { history, setUser, setLogged } }) => {
           </>
         ) : null}
         <h5>{message}</h5>
-        <button type="submit">{register ? "Register" : "Login"}</button>
+        <SubmitButton type="submit">{register ? "Register" : "Login"}</SubmitButton>
         {!register ? (
           <>
             <p>
@@ -178,7 +180,7 @@ const Auth = ({ props: { history, setUser, setLogged } }) => {
           </>
         )}
       </AuthForm>
-    </div>
+    </AuthContainer>
   );
 };
 

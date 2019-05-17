@@ -6,7 +6,7 @@ const SubmitButton = styled.button`
   border: 1px solid rgb(220, 220, 220);
   cursor: pointer;
   font-weight: bold;
-  padding: 6px 24px;
+  padding: 12px 48px;
   margin: 12px;
   :hover {
     background-color: rgb(246, 246, 246);

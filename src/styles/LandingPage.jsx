@@ -4,7 +4,7 @@ const LandingPage = styled.div`
   background-image: linear-gradient(to top, rgba(191, 218, 231, 0.3), rgba(191, 218, 231, 0.3)), url('../images/landing-background.jpg');
   background-size: cover;
   width: 100vw;
-  height: 92vh;
+  height: 89vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,6 +16,7 @@ const LandingPage = styled.div`
     align-items: center;
   }
   div {
+    height: 45vh;
     background-color: rgba(255,255,255, 0.9);
     display: flex;
     flex-direction: column;
