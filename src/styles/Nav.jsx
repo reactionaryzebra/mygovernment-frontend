@@ -8,6 +8,15 @@ const Nav = styled.nav`
   padding-left: 1vw;
   padding-right: 1vw;
   background-color: transparent;
+  a {
+    text-decoration: none;
+  }
+  a:visited {
+    color: black;
+  }
+  a:first-child {
+    font-weight: bold;
+  }
 `
 
 export default Nav;
